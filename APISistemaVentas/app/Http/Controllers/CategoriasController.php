@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Categorias;
+use Illuminate\Support\Facades\DB;
 
 class CategoriasController extends Controller
 {
     public function ListarCategorias()
     {
-        $datos = Categorias::all();
+        $datos = DB::select('select * from ViewCategorias');
         return response()->json(['categorias' => $datos]);
     }
 
