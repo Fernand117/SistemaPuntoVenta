@@ -27,4 +27,25 @@ class CategoriasController extends Controller
         $datos->save();
         return response()->json(['Mensaje'=>'Categoria almacenada correctamente']);
     }
+
+    public function ActualizarCategoria(Request $request, $id){
+        $input = $request->all();
+        $datos = Categorias::find($id);
+        if(isset($input['imagen'])){
+            $extension = $request->file('imagen')->getClientOriginalExtension();
+            $path = base_path().'/public/img/categorias/';
+            $name = "imagen_".date('Y_m_d_h_i_s').".".$extension;
+            $request->file("imagen")->move($path, $name);
+            $datos->imagen = $name;
+        }
+        $datos->nombre = $input['nombre'];
+        $datos->update();
+        return response()->json(['Mensaje'=>'La categoría se ha actualizado correctamente']);
+    }
+
+    public function EliminarCategoria($id){
+        $datos = Categorias::find($id);
+        $datos->delete();
+        return response()->json(['Mensaje'=>'Categoria eliminada correctamente']);
+    }
 }
