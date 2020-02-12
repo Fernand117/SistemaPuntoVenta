@@ -11,7 +11,11 @@ class CategoriasController extends Controller
     public function ListarCategorias()
     {
         $datos = DB::select('select * from ViewCategorias');
-        return response()->json(['categorias' => $datos]);
+        $items = json_decode(json_encode($datos), true);
+        for($i=0; $i < count($datos); $i++){
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/categorias/'.$items[$i]['imagen'];
+        }
+        return response()->json(['categorias' => $items]);
     }
 
     public function RegistrarCategoria(Request $request)

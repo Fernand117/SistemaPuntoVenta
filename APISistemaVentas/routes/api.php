@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 Route::get('categorias', 'CategoriasController@ListarCategorias');
 Route::post('categorias/nueva', 'CategoriasController@RegistrarCategoria');
 Route::post('categorias/editar/{id}', 'CategoriasController@ActualizarCategoria');
-Route::delete('categorias/eliminar/{id}', 'CategoriasController@EliminarCategoria');
+Route::post('categorias/eliminar/{id}', 'CategoriasController@EliminarCategoria');
 
 
 /**Rutas CRUD para subcategorias */

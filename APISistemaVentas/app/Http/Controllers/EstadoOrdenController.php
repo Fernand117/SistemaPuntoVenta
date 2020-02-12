@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class EstadoOrdenController extends Controller
 {
     public function ListarEstados(){
-        $datos = DB::select('SELECT * FROM ViewEstados');
+        $datos = DB::select('SELECT * FROM ViewVentasEstado');
         return response()->json(['Estado' => $datos]);
     }
 
