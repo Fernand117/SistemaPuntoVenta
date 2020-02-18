@@ -8,6 +8,6 @@ class Subcategorias extends Model
 {
     protected $table = 'subcategorias';
     protected $fillabel = [
-        'imagen', 'nombre', 'idcategoria'
+        'imagen', 'nombre', 'idcategoria','estado'
     ];
 }

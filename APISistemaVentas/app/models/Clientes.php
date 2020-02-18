@@ -8,6 +8,6 @@ class Clientes extends Model
 {
     protected $table = 'clientes';
     protected $fillabel = [
-        'nombre', 'apellidop', 'apellidom', 'direccion', 'telefono'
+        'nombre', 'apellidop', 'apellidom', 'direccion', 'telefono','estado'
     ];
 }

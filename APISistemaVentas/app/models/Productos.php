@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Productos extends Model
 {
     protected $table = 'productos';
+    protected  $primaryKey = 'codigo';
     protected $fillabel = [
-        'imagen','nombre','descripcion','stock','idcategoria','idsubcategoria','idmarca','idprovedor'
+        'codigo','imagen','nombre','descripcion','idcategoria','idsubcategoria','idmarca','idprovedor','estado'
     ];
 }

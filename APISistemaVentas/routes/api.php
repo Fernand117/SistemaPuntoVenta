@@ -21,7 +21,7 @@ Route::post('categorias/eliminar/{id}', 'CategoriasController@EliminarCategoria'
 
 
 /**Rutas CRUD para subcategorias */
-Route::get('subcategorias', 'SubcategoriasController@ListarSubcategorias');
+Route::get('subcategorias/{id}', 'SubcategoriasController@ListarSubcategorias');
 Route::post('subcategorias/nueva', 'SubcategoriasController@RegistrarSubcategoria');
 Route::post('subcategorias/editar/{id}', 'SubcategoriasController@ActualizarSubcategorias');
 Route::delete('subcategorias/eliminar/{id}', 'SubcategoriasController@EliminarSubcategoria');
@@ -38,14 +38,37 @@ Route::post('provedores/nuevo', 'ProvedoresController@RegistrarProvedor');
 Route::post('provedores/editar/{id}', 'ProvedoresController@ActualizarProvedor');
 Route::delete('provedores/eliminar/{id}', 'ProvedoresController@EliminarProvedor');
 
-/**Rutas CRUD para Precios */
-Route::get('precios', 'PreciosController@ListarPrecios');
-Route::post('precios/nuevo', 'PreciosController@RegistrarPrecio');
-Route::post('precios/editar/{id}', 'PreciosController@ActualizarPrecio');
-Route::delete('precios/eliminar/{id}', 'PreciosController@EliminarPrecio');
 
-/**Rutas CRUD para Estados de ordenes */
-Route::get('estados', 'EstadoOrdenController@ListarEstados');
-Route::post('estados/nuevo', 'EstadoOrdenController@RegistrarEstadoOrden');
-Route::post('estados/editar/{id}', 'EstadoOrdenController@ActualizarEstadoOrden');
-Route::delete('estados/eliminar/{id}', 'EstadoOrdenController@EliminarEstadoOrden');
+/**Rutas CRUD para productos */
+Route::get('productos', 'ProductosController@ListProductsGeneral');
+Route::get('productos/{subcategoria}/{categoria}', 'ProductosController@ListarProductos');
+Route::post('productos/nuevo', 'ProductosController@RegistrarProducto');
+Route::post('producto/editar/{id}', 'ProductosController@ActualizarProducto');
+Route::post('productos/eliminar/{id}', 'ProductosController@EliminarProducto');
+
+/**Rutas CRUD para clientes */
+Route::get('clientes', 'ClientesController@ListarClientes');
+Route::post('clientes/nuevo','ClientesController@RegistrarCliente');
+Route::post('clientes/actualizar/{id}', 'ClientesController@ActualizarCliente');
+Route::post('clientes/eliminar/{id}', 'ClientesController@EliminarCliente');
+
+/**Rutas CRUD para ordenes de compra */
+Route::get('ordenescompras', 'OrdenesComprasController@ListarOrdenesCompras');
+Route::post('ordenescompras/nueva', 'OrdenesComprasController@RegistrarOrdenCompra');
+Route::post('ordenescompras/editar/{id}', 'OrdenesComprasController@ActualizarOrdenCompra');
+Route::post('ordenescompras/eliminar/{id}', 'OrdenesComprasController@EliminarOrdenCompra');
+
+/**Rutas CRUD para usuarios */
+Route::post('usuarios/login', 'UsuariosController@ValidateUser');
+Route::post('usuarios/nuevo', 'UsuariosController@RegistrarUsuario');
+Route::post('usuarios/editar/{id}', 'UsuariosController@ActualizarUsuario');
+Route::post('usuarios/eliminar/{id}', 'UsuariosController@EliminarUsuario');
+
+/**Rutas CRUD para las salidas */
+Route::get('salidas', 'AlmacenSalidaController@ListarSalidas');
+Route::post('salida/nueva', 'AlmacenSalidaController@RegistrarSalida');
+Route::post('salida/editar/{id}', 'AlmacenSalidaController@ActualizarSalida');
+
+/**Rutas CRUD para almacen general */
+Route::get('almacen', 'AlmacenGeneralController@ListarAlmacen');
+Route::post('almacen/nuevo', 'AlmacenGeneralController@Store');

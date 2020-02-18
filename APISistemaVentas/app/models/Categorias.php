@@ -8,6 +8,6 @@ class Categorias extends Model
 {
     protected $table = 'categorias';
     protected $fillabel = [
-        'imagen', 'nombre'
+        'imagen', 'nombre','estado'
     ];
 }

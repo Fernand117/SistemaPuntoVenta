@@ -21,6 +21,7 @@ class ClientesController extends Controller
         $datos->apellidom = $input['apellidom'];
         $datos->direccion = $input['direccion'];
         $datos->telefono = $input['telefono'];
+        $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Cliente registrado correctamente']);
     }
@@ -39,7 +40,8 @@ class ClientesController extends Controller
 
     public function EliminarCliente($id){
         $datos = Clientes::find($id);
-        $datos->delete();
+        $datos->estado = 0;
+        $datos->update();
         return response()->json(['Mensaje' => 'Cliente eliminado correctamente']);
     }
 }

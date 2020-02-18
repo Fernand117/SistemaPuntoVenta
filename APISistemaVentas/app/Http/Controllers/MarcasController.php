@@ -22,6 +22,7 @@ class MarcasController extends Controller
         $datos = new Marcas();
         $datos->imagen = $name;
         $datos->nombre = $input['nombre'];
+        $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Marca almacenada correctamente']);
 
@@ -44,7 +45,8 @@ class MarcasController extends Controller
 
     public function EliminarMarca($id){
         $datos = Marcas::find($id);
-        $datos->delete();
+        $datos->estado = 0;
+        $datos->update();
         return response()->json(['Mensaje' => 'Marca eliminada correctamente']);
     }
 }

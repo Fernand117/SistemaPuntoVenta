@@ -8,6 +8,6 @@ class Provedores extends Model
 {
     protected $table = 'provedores';
     protected $fillabel = [
-        'nombre', 'direccion', 'telefono'
+        'nombre', 'direccion', 'telefono','estado'
     ];
 }

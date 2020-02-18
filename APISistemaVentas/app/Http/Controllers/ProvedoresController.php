@@ -19,6 +19,7 @@ class ProvedoresController extends Controller
         $datos->nombre = $input['nombre'];
         $datos->direccion = $input['direccion'];
         $datos->telefono = $input['telefono'];
+        $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Provedor registrado correctamente']);
     }
@@ -35,7 +36,8 @@ class ProvedoresController extends Controller
 
     public function EliminarProvedor($id){
         $datos = Provedores::find($id);
-        $datos->delete();
+        $datos->estado = 0;
+        $datos->update();
         return response()->json(['Mensaje' => 'Provedor eliminado correctamente']);
     }
 }

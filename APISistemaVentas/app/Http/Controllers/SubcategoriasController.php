@@ -8,8 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class SubcategoriasController extends Controller
 {
-    public function ListarSubcategorias(){
-        $datos = DB::select('SELECT * FROM ViewSubcategorias');
+    public function ListarSubcategorias($id){
+        $datos = DB::select('SELECT * FROM ViewSubcategorias WHERE idcategoria = ?',[$id]);
+        $items = json_decode(json_encode($datos), true);
+        for($i=0; $i < count($datos); $i++){
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/subcategorias/'.$items[$i]['imagen'];
+        }
         return response()->json(['Subcategorias'=>$datos]);
     }
 
@@ -23,6 +27,7 @@ class SubcategoriasController extends Controller
         $datos->imagen = $name;
         $datos->nombre = $input['nombre'];
         $datos->idcategoria = $input['idcategoria'];
+        $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Subcategoria almacenada correctamente']);
     }
@@ -45,7 +50,8 @@ class SubcategoriasController extends Controller
 
     public function EliminarSubcategoria($id){
         $datos = Subcategorias::find($id);
-        $datos->delete();
+        $datos->estado = 1;
+        $datos->update();
         return response()->json(['Mensaje'=>'Subcategoria eliminada correctamente']);
     }
 }

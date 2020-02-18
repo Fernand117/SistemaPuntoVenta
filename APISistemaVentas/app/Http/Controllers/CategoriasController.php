@@ -28,6 +28,7 @@ class CategoriasController extends Controller
         $datos = new Categorias();
         $datos->imagen = $name;
         $datos->nombre = $input['nombre'];
+        $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje'=>'Categoria almacenada correctamente']);
     }
@@ -49,7 +50,8 @@ class CategoriasController extends Controller
 
     public function EliminarCategoria($id){
         $datos = Categorias::find($id);
-        $datos->delete();
+        $datos->estado = 0;
+        $datos->update();
         return response()->json(['Mensaje'=>'Categoria eliminada correctamente']);
     }
 }

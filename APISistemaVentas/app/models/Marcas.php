@@ -8,6 +8,6 @@ class Marcas extends Model
 {
     protected $table = 'marcas';
     protected $fillabel = [
-        'imagen', 'nombre'
+        'imagen', 'nombre','estado'
     ];
 }
