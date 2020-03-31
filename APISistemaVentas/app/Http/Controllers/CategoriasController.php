@@ -10,10 +10,10 @@ class CategoriasController extends Controller
 {
     public function ListarCategorias()
     {
-        $datos = DB::select('select * from ViewCategorias');
+        $datos = DB::select('select * from ViewCategorias');        
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/categorias/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/categorias/'.$items[$i]['imagen'];
         }
         return response()->json(['categorias' => $items]);
     }

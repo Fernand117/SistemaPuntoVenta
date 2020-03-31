@@ -44,4 +44,9 @@ class ClientesController extends Controller
         $datos->update();
         return response()->json(['Mensaje' => 'Cliente eliminado correctamente']);
     }
+
+    public function TotalClientes(){
+        $datos = DB::select('SELECT COUNT(*) FROM ViewClientes');
+        return response()->json(['Total' => $datos]);
+    }
 }

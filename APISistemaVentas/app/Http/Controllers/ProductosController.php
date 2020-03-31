@@ -8,11 +8,22 @@ use Illuminate\Support\Facades\DB;
 
 class ProductosController extends Controller
 {
+    public function ProductosDetalles(Request $request){
+        $input = $request->all();
+        $codigo_producto = $input['codigo'];
+        $datos = DB::select('SELECT * FROM ViewProductos WHERE codigo = ?', [$codigo_producto]);
+        $items = json_decode(json_encode($datos), true);
+        for($i=0; $i < count($datos); $i++){
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
+        }
+        return response()->json(['Productos' => $items]);
+    }
+
     public function ListProductsGeneral(){
         $datos = DB::select('select * from ViewProductos');
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
         }
         return response()->json(['Productos' => $items]);
     }
@@ -71,5 +82,11 @@ class ProductosController extends Controller
         $datos->estado = 0;
         $datos->update();
         return response()->json(['Mensaje'=>'Producto eliminado correctamente']);
+    }
+
+    public function TotalProductosRegistrados(){
+        $datos = DB::select('SELECT * FROM TotalProductosRegistrados');
+        return response()->json(['Total' => $datos]);
+        
     }
 }

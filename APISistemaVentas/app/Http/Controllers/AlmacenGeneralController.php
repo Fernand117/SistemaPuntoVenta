@@ -14,6 +14,13 @@ class AlmacenGeneralController extends Controller
         return response()->json(['Almacen' => $datos]);
     }
 
+    public function ListarAlmacenFecha(Request $request){
+        $input = $request->all();
+        $fecha = $input['fecha'];
+        $datos = DB::select('SELECT * FROM ViewAlmacen WHERE fecha_ingreso = ?', [$fecha]);
+        return response()->json(['AlmacenFecha' => $datos]);
+    }
+
     public function Store(Request $request)
     {
         $input = $request->all();

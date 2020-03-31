@@ -44,4 +44,9 @@ class OrdenesComprasController extends Controller
         $datos->update();
         return response()->json(['Mensaje' => 'Orden de compra eliminada correctamente']);
     }
+
+    public function TotalOrdenesCompras(){
+        $datos = DB::select('SELECT COUNT(*) FROM ViewOrdenesCompras');
+        return response()->json(['Total' => $datos]);
+    }
 }
