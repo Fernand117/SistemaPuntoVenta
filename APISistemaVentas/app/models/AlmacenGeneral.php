@@ -8,6 +8,6 @@ class AlmacenGeneral extends Model
 {
     protected $table = 'almacen_general';
     protected $fillabel = [
-        'idproducto','cantidad','fecha_ingreso','estado'
+        'idproducto','cantidad','fecha_ingreso','idcompra','estado'
     ];
 }

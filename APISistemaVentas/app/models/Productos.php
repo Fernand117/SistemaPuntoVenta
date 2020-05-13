@@ -9,6 +9,6 @@ class Productos extends Model
     protected $table = 'productos';
     protected  $primaryKey = 'codigo';
     protected $fillabel = [
-        'codigo','imagen','nombre','descripcion','idcategoria','idsubcategoria','idmarca','idprovedor','estado'
+        'codigo','imagen','nombre','descripcion','idcategoria','idsubcategoria','idmarca','idprovedor', 'precio' ,'estado'
     ];
 }

@@ -16,10 +16,9 @@ class OrdenesComprasController extends Controller
     public function RegistrarOrdenCompra(Request $request){
         $input = $request->all();
         $datos = new OrdenesCompras();
-        $datos->nombre_producto = $input['nombreproducto'];
-        $datos->cantidad = $input['cantidad'];
-        $datos->fecha_entrega = $input['fechaentrega'];
-        $datos->idprovedor = $input['idprovedor'];
+        $datos->remision_compra = $input["remision_compra"];
+        $datos->fecha_entrega = $input["fecha_entrega"];
+        $datos->idprovedor = $input["idprovedor"];
         $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Orden de compra registrada correctamente']);
@@ -29,10 +28,9 @@ class OrdenesComprasController extends Controller
     {
         $input = $request->all();
         $datos = OrdenesCompras::find($id);
-        $datos->nombre_producto = $input['nombreproducto'];
-        $datos->cantidad = $input['cantidad'];
-        $datos->fecha_entrega = $input['fechaentrega'];
-        $datos->idprovedor = $input['idprovedor'];
+        $datos->remision_compra = $input["remision_compra"];
+        $datos->fecha_entrega = $input["fecha_entrega"];
+        $datos->idprovedor = $input["idprovedor"];
         $datos->update();
         return response()->json(['Mensaje' => 'Orden de compra actualizada correctamente']);
     }

@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 /**Rutas CRUD para las categorias */
 Route::get('categorias', 'CategoriasController@ListarCategorias');
 Route::post('categorias/nueva', 'CategoriasController@RegistrarCategoria');
@@ -42,10 +46,10 @@ Route::delete('provedores/eliminar/{id}', 'ProvedoresController@EliminarProvedor
 
 /**Rutas CRUD para productos */
 Route::get('productos', 'ProductosController@ListProductsGeneral');
-Route::get('productos/{subcategoria}/{categoria}', 'ProductosController@ListarProductos');
+Route::get('productos/filtro/{id}', 'ProductosController@ListarProductos');
 Route::post('productos/nuevo', 'ProductosController@RegistrarProducto');
 Route::post('producto/editar/{id}', 'ProductosController@ActualizarProducto');
-Route::post('productos/eliminar/{id}', 'ProductosController@EliminarProducto');
+Route::delete('productos/eliminar/{id}', 'ProductosController@EliminarProducto');
 Route::get('productos/total', 'ProductosController@TotalProductosRegistrados');
 Route::post('productos/add', 'ProductosController@ProductosDetalles');
 
@@ -53,21 +57,23 @@ Route::post('productos/add', 'ProductosController@ProductosDetalles');
 Route::get('clientes', 'ClientesController@ListarClientes');
 Route::post('clientes/nuevo','ClientesController@RegistrarCliente');
 Route::post('clientes/actualizar/{id}', 'ClientesController@ActualizarCliente');
-Route::post('clientes/eliminar/{id}', 'ClientesController@EliminarCliente');
+Route::delete('clientes/eliminar/{id}', 'ClientesController@EliminarCliente');
 Route::get('clientes/total', 'ClientesController@TotalClientes');
+Route::post('cliente/detalle', 'ClientesController@ClienteDetalle');
 
 /**Rutas CRUD para ordenes de compra */
 Route::get('ordenescompras', 'OrdenesComprasController@ListarOrdenesCompras');
 Route::post('ordenescompras/nueva', 'OrdenesComprasController@RegistrarOrdenCompra');
 Route::post('ordenescompras/editar/{id}', 'OrdenesComprasController@ActualizarOrdenCompra');
-Route::post('ordenescompras/eliminar/{id}', 'OrdenesComprasController@EliminarOrdenCompra');
+Route::delete('ordenescompras/eliminar/{id}', 'OrdenesComprasController@EliminarOrdenCompra');
 Route::get('ordenescompras/total', 'OrdenesComprasController@TotalOrdenesCompras');
 
 /**Rutas CRUD para usuarios */
-Route::post('usuarios/login', 'UsuariosController@ValidateUser');
-Route::post('usuarios/nuevo', 'UsuariosController@RegistrarUsuario');
-Route::post('usuarios/editar/{id}', 'UsuariosController@ActualizarUsuario');
-Route::post('usuarios/eliminar/{id}', 'UsuariosController@EliminarUsuario');
+Route::post('registrar', 'Auth\RegisterController@create');
+Route::post('login','Auth\LoginController@login');
+Route::post('leerToken', 'Auth\LoginController@LeerToken');
+Route::get('logout', 'Auth\LoginController@logout');
+Route::get('usuarios', 'Auth\LoginController@ListaUsuarios');
 
 /**Rutas CRUD para las salidas */
 Route::get('salidas', 'AlmacenSalidaController@ListarSalidas');
@@ -77,6 +83,7 @@ Route::post('salida/editar/{id}', 'AlmacenSalidaController@ActualizarSalida');
 /**Rutas CRUD para almacen general */
 Route::get('almacen', 'AlmacenGeneralController@ListarAlmacen');
 Route::get('almacen/fecha', 'AlmacenGeneralController@ListarAlmacenFecha');
+Route::post('almacen/detalles/compras', 'AlmacenGeneralController@ListarDetallesCompras');
 Route::post('almacen/nuevo', 'AlmacenGeneralController@Store');
 
 /**Rutas CRUD para las remisiones */
@@ -84,7 +91,13 @@ Route::get('remisiones', 'RemisionesController@ListarRemisiones');
 Route::post('remisiones/nueva', 'RemisionesController@RegistrarRemision');
 Route::post('remisiones/editar', 'RemisionesController@ActualizarRemision');
 Route::delete('remisiones/eliminar/{id}', 'RemisionesController@EliminarRemision');
+Route::post('remisiones/actualizar', 'RemisionesController@ActualizarRemision');
+Route::get('remisionesp', 'RemisionesController@RemisionPrueba');
 
 /**Rutas CRUD para los detalles de la remision */
 Route::post('detallesremision', 'DetallesRemisionController@ListarRemision');
 Route::post('detallesremision/nuevo', 'DetallesRemisionController@RegistrarDetalleRemision');
+Route::delete('detallesremision/eliminar/{id}', 'DetallesRemisionController@EliminarDetalleRemision');
+
+
+Route::get('stock', 'StockController@Stock');

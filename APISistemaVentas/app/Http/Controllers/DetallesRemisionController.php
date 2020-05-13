@@ -5,20 +5,29 @@ namespace App\Http\Controllers;
 use App\models\DetallesRemision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use NumeroALetras\NumeroALetras;
 
 class DetallesRemisionController extends Controller
 {
     public function ListarRemision(Request $request){
         $input = $request->all();
         $nremision = $input['numero_remision'];
-        $datos = DB::select('select r.numero_remision, r.fecha_remision, r.estado_remision, r.descripcion, r.venta, r.total, d.almacen_general, d.almacen_salida, d.cantidad, d.subtotal,c.nombre as cliente, p.codigo, p.nombre as producto from detalles_remision d, clientes c, productos p, remisiones r where d.idremision = r.numero_remision and d.idproducto = p.codigo and d.idcliente = c.id and r.numero_remision = ?', [$nremision]);
-        $subtotalgr = DB::select('select SUM(subtotal) as Subtotal from detalles_remision where idremision = ?', [$nremision]);
-        $subtotalgeneral = DB::select('select SUM(subtotal) as Total from detalles_remision where idremision = ?', [$nremision]);
+
+        $dtremision = 
+        DB::select('SELECT * FROM ViewDetallesRemisionDatos WHERE numero_remision = ?', [$nremision]);
+
+        $datos = DB::select('SELECT * FROM ViewDetallesRemisionRemision WHERE venta = 1 and numero_remision = ?', [$nremision]);
+        $subtotalgr = DB::select('SELECT * FROM ViewSubtotalRemisionDetalles WHERE idremision = ?', [$nremision]);
+        $subtotalgeneral = DB::select('SELECT * FROM ViewTotalRemisionesDetalles WHERE idremision = ?', [$nremision]);
         $items = json_decode(json_encode($subtotalgeneral), true);
         for($i=0; $i < count($subtotalgeneral); $i++){
             $items[$i]['total'] = $items[$i]['total'] + ($items[$i]['total'] * .16);
         }
-        return response()->json(['Remisiones' => $datos,'Subtotal' => $subtotalgr ,'Total' => $items]);
+        $formatter = NumeroALetras::convertir($items['0']['total'], 'PESOS');
+
+        $LetrasJson = json_decode(json_encode($formatter), true);
+
+        return response()->json(['Remisiones' => $datos,'Subtotal' => $subtotalgr ,'Total' => $items,'LetrasTotal' => $LetrasJson,'Detalles' => $dtremision]);
     }
 
     public function RegistrarDetalleRemision(Request $request){
@@ -33,11 +42,20 @@ class DetallesRemisionController extends Controller
             $datos->almacen_salida = $input['almacen'];
         }
         $datos->cantidad = $input['cantidad'];
+        /**
+         * Validar que el stock actual del producto sea mayor a la cantidad que se está ingresando
+         * de lo contrario, no podrá registrarlo
+         */
         $cant = $datos->cantidad;
         $price = $input['precio'];
         $datos->subtotal = $price * $cant;
         $datos->estado = 1;
         $datos->save();
         return response()->json(['Mensaje' => 'Producto añadido correctamente']);
+    }
+
+    public function EliminarDetalleRemision($id){
+        $datos = DB::delete('delete from detalles_remision where idproducto = ?', [$id]);
+        return response()->json(['Mensaje' => 'Producto eliminado']);
     }
 }

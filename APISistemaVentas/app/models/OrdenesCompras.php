@@ -8,6 +8,6 @@ class OrdenesCompras extends Model
 {
     protected $table = 'ordenes_compras';
     protected $fillabel = [
-        'nombre_producto','cantidad','fecha_entrega','idprovedor','estado'
+        'remision_compra','fecha_entrga','idprovedor','estado'
     ];
 }

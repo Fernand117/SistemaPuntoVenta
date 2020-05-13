@@ -13,6 +13,14 @@ class ClientesController extends Controller
         return response()->json(['Clientes' => $datos]);
     }
 
+    public function ClienteDetalle(Request $request)
+    {
+        $input = $request->all();
+        $id = $input['idcliente'];
+        $datos = DB::select('SELECT * FROM ViewClientes where id = ?', [$id]);
+        return response()->json(['Clientes' => $datos]);
+    }
+
     public function RegistrarCliente(Request $request){
         $input = $request->all();
         $datos = new Clientes();
