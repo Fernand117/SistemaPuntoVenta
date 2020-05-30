@@ -14,7 +14,7 @@ class ProductosController extends Controller
         $datos = DB::select('SELECT * FROM ViewProductos WHERE codigo = ?', [$codigo_producto]);
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
         }
         return response()->json(['Productos' => $items]);
     }
@@ -23,7 +23,7 @@ class ProductosController extends Controller
         $datos = DB::select('select * from ViewProductos');
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
         }
         return response()->json(['Productos' => $items]);
     }
@@ -31,8 +31,8 @@ class ProductosController extends Controller
     public function ListarProductos($id){
         $subcategoria = DB::select('select * from ViewProductos where subcategoria = ?', [$id]);
         $categoria = DB::select('select * from ViewProductos where categoria = ?', [$id]);
-	$marca = DB::select('select * from ViewProductos where marca = ?', [$id]);
-	$provedor = DB::select('select * from ViewProductos where provedor = ?', [$id]);
+	    $marca = DB::select('select * from ViewProductos where marca = ?', [$id]);
+	    $provedor = DB::select('select * from ViewProductos where provedor = ?', [$id]);
         
         if($subcategoria != null){
             $datos = $subcategoria;
@@ -47,7 +47,7 @@ class ProductosController extends Controller
         $items = json_decode(json_encode($datos), true);
         
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
         }
         
         return response()->json(['Productos' => $items]);
@@ -55,25 +55,37 @@ class ProductosController extends Controller
 
     public function RegistrarProducto(Request $request){
         $input = $request->all();
-        $datos = new Productos();
-        if(isset($input['imagen'])){
-            $extension = $request->file('imagen')->getClientOriginalExtension();
-            $path = base_path().'/public/img/productos/';
-            $name = "imagen_".date('Y_m_d_h_i_s').".".$extension;
-            $request->file("imagen")->move($path, $name);
-            $datos->imagen = $name;
+
+        $idproducto = $input['codigo'];
+
+        $consult = DB::select('select * from productos where codigo = ? and estado = 1', [$idproducto]);
+
+        if($consult != null){
+            $mensaje = "El producto ya está registrado";
+        } else {
+            $datos = new Productos();
+            if(isset($input['imagen'])){
+                $extension = $request->file('imagen')->getClientOriginalExtension();
+                $path = base_path().'/public/img/productos/';
+                $name = "imagen_".date('Y_m_d_h_i_s').".".$extension;
+                $request->file("imagen")->move($path, $name);
+                $datos->imagen = $name;
+            }
+            $datos->codigo = $input['codigo'];
+            $datos->nombre = $input['nombre'];
+            $datos->descripcion = $input['descripcion'];
+            $datos->idcategoria = $input['idcategoria'];
+            $datos->idsubcategoria = $input['idsubcategoria'];
+            $datos->idmarca = $input['idmarca'];
+            $datos->idprovedor = $input['idprovedor'];
+            $datos->precio = $input['precio'];
+            $datos->estado = 1;
+            $datos->save();
+            $mensaje = "Producto registrado correctamente";
         }
-        $datos->codigo = $input['codigo'];
-        $datos->nombre = $input['nombre'];
-        $datos->descripcion = $input['descripcion'];
-        $datos->idcategoria = $input['idcategoria'];
-        $datos->idsubcategoria = $input['idsubcategoria'];
-        $datos->idmarca = $input['idmarca'];
-        $datos->idprovedor = $input['idprovedor'];
-        $datos->precio = $input['precio'];
-        $datos->estado = 1;
-        $datos->save();
-        return response()->json(['Mensaje' => 'Producto almacenado correctamente']);
+
+
+        return response()->json(['Mensaje' => $mensaje]);
     }
 
     public function ActualizarProducto($id, Request $request){

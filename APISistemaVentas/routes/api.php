@@ -101,3 +101,5 @@ Route::delete('detallesremision/eliminar/{id}', 'DetallesRemisionController@Elim
 
 
 Route::get('stock', 'StockController@Stock');
+
+Route::post('productos/prueba', 'DetallesRemisionController@PruebaProd');
