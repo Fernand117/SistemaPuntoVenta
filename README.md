@@ -1,3 +1,8 @@
+<<<<<< API-VERSION-01
+# API PUNTO DE VENTAS
+
+Esta es la versión 1.0 de nuestro API, la cual está conectada una base de datos PostgreSQL, pero esta puede cambiar y crearse en otro gestor de base de datos, lo importante es crearla bajo el mismo nombre (ver .env) y la misma estructura de las tablas y sus datos, sin olvidarse de las vistas e índices que se crearon para poder dar vida a los resultados JSON.
+
 # API del sistema punto de ventas (Backend)
 
 # API VERSIÓN 1.0
@@ -17,3 +22,4 @@ En producción se quita el puerto y se deja normal la url.
 También es importante señalar que para conectar el frontend de la aplicación es necesario cambiar la dirección url en los archivos services del Angular, pues están configurados con un dominio local en donde fue implementado el proyecto.(También un archivo json de configuración)
 
 Cualquier duda ponerse en contacto con el desarrollador.
+>>>>>> master

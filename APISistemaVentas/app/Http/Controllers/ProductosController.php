@@ -14,7 +14,7 @@ class ProductosController extends Controller
         $datos = DB::select('SELECT * FROM ViewProductos WHERE codigo = ?', [$codigo_producto]);
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
         }
         return response()->json(['Productos' => $items]);
     }
@@ -23,7 +23,7 @@ class ProductosController extends Controller
         $datos = DB::select('select * from ViewProductos');
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
         }
         return response()->json(['Productos' => $items]);
     }
@@ -47,7 +47,7 @@ class ProductosController extends Controller
         $items = json_decode(json_encode($datos), true);
         
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/productos/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].':8000/img/productos/'.$items[$i]['imagen'];
         }
         
         return response()->json(['Productos' => $items]);

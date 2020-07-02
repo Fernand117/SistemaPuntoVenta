@@ -79,22 +79,16 @@ class DetallesRemisionController extends Controller
         return response()->json(['Mensaje' => 'Producto eliminado']);
     }
 
-    public function PruebaProd(Request $request)
+    public function PruebaProd()
     {
-        $input = $request->all();
-
-        $idproducto = $input['idproducto'];
-
-        $consult = DB::select('select precio from productos where codigo = ?', [$idproducto]);
-        $items = json_decode(json_encode($consult), true);
-
-        for($i = 0; $i < count($consult); $i++){
-            $items[$i]['precio'] = $items[$i]['precio']/1.16;
+        $i = 5;
+        for(;$i < 100;){
+            if($i == 60){
+                $i = $i + 40;
+            }
+            echo $i;
+            echo ",";
+            $i += 5;
         }
-
-        $price = $items['0']['precio'];
-        $price = round($price * 100)/100;
-
-        return response()->json(["Mensaje" => $price]);
     }
 }
