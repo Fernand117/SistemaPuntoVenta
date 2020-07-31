@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\models\Remisiones;
 use Hamcrest\Core\HasToString;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+
 
 class RemisionesController extends Controller
 {
@@ -40,10 +42,10 @@ class RemisionesController extends Controller
             $nremisionn = "1";
         }
 
-        $datos->fecha_remision = $input['fecha_remision'];
+        $datos->fecha_remision = Carbon::now()->toDateTimeString();
         $datos->numero_remision = $nremisionn;
-        $datos->estado_remision = $input['estado_remision'];
-        $datos->descripcion = $input['descripcion'];
+        $datos->estado_remision = "Venta";
+        $datos->descripcion = "Venta de productos";
         $datos->venta = 0;
         $datos->total = 0;
         $datos->idusuario = $input['idusuario'];
