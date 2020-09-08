@@ -20,7 +20,7 @@ class StockController extends Controller
         $retorno = DB::select('select sum(cantidad_retorno) as retorno from Almacen_Salida group by idproducto ORDER BY idproducto');
         $itemRetorno = json_decode(json_encode($retorno), true);
 
-        for($i = 0; $i < count($remision); $i++){
+        for($i = 0; $i < count($itemRemision); $i++){
             $itemGeneral[$i]['stock'] = ($itemGeneral[$i]['stock'] - $itemRemision[$i]['cantidad']);
         }
         return response()->json(['Stock' => $itemGeneral]);

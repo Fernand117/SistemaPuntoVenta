@@ -26,7 +26,7 @@ class DetallesRemisionController extends Controller
 
         $subtotalgr = DB::select('SELECT * FROM ViewSubtotalRemisionDetalles WHERE idremision = ?', [$nremision]);
 
-        $subtotalgeneral = DB::select('SELECT * FROM ViewTotalRemisionesDetalles WHERE idremision = ?', [$nremision]);
+	$subtotalgeneral = DB::select('SELECT sum(total) as total FROM ViewTotalRemisionesDetalles WHERE idremision = ?', [$nremision]);
 
         $items = json_decode(json_encode($subtotalgeneral), true);
         for ($i = 0; $i < count($subtotalgeneral); $i++) {

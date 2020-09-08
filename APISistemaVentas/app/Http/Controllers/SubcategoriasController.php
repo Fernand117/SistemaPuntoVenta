@@ -12,7 +12,7 @@ class SubcategoriasController extends Controller
         $datos = DB::select('SELECT * FROM ViewSubcategorias');
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/subcategorias/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/ApiVentas/img/subcategorias/'.$items[$i]['imagen'];
         }
         return response()->json(['Subcategorias'=>$items]);
     }
@@ -21,7 +21,7 @@ class SubcategoriasController extends Controller
         $datos = DB::select('SELECT * FROM ViewSubcategorias WHERE idcategoria = ?',[$id]);
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/subcategorias/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/ApiVentas/img/subcategorias/'.$items[$i]['imagen'];
         }
         return response()->json(['Subcategorias'=>$items]);
     }

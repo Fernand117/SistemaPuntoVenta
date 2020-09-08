@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ClientesController extends Controller
 {
     public function ListarClientes(){
-        $datos = DB::select('SELECT * FROM ViewClientes');
+        $datos = DB::select('SELECT * FROM ViewClientes order by id');
         return response()->json(['Clientes' => $datos]);
     }
 
@@ -37,12 +37,31 @@ class ClientesController extends Controller
     public function ActualizarCliente(Request $request, $id){
         $input = $request->all();
         $datos = Clientes::find($id);;
-        $datos->nombre = $input['nombre'];
-        $datos->apellidop = $input['apellidop'];
-        $datos->apellidom = $input['apellidom'];
-        $datos->direccion = $input['direccion'];
-        $datos->telefono = $input['telefono'];
-        $datos->update();
+	
+	if(isset($input['nombre'])){
+		$datos->nombre = $input['nombre'];
+		$datos->update();
+	}
+	
+	if(isset($input['apellidop'])){
+		$datos->apellidop = $input['apellidop'];
+		$datos->update();
+	}
+
+	if(isset($input['apellidom'])){
+		$datos->apellidom = $input['apellidom'];
+		$datos->update();
+	}
+
+	if(isset($input['descripcion'])){
+		$datos->descripcion = $input['descripcion'];
+		$datos->update();
+	}
+
+	if(isset($input['telefono'])){
+		$datos->telefono = $input['telefono'];
+		$datos->update();
+	}
         return response()->json(['Mensaje' => 'Cliente actualizado correctamente']);
     }
 

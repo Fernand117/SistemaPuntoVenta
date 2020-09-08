@@ -67,7 +67,7 @@ class LoginController extends Controller
     }
 
     public function ListaUsuarios() {
-        $datos = DB::select('select a.nombre, a.apellidop, a.apellidom, u.email, u.token, u.id from users u, administrador a where u.id = a.userid');
+        $datos = DB::select('select a.nombre, a.apellidop, a.apellidom, u.email, u.token, u.id from users u, administrador a where u.id = a.userid order by u.id');
         return response()->json(['Usuarios' => $datos]);
     }
 }

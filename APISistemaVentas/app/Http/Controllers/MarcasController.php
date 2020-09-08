@@ -12,7 +12,7 @@ class MarcasController extends Controller
         $datos = DB::select('SELECT * FROM ViewMarcas');
         $items = json_decode(json_encode($datos), true);
         for($i=0; $i < count($datos); $i++){
-            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/img/marcas/'.$items[$i]['imagen'];
+            $items[$i]['imagen'] = 'http://'.$_SERVER['SERVER_NAME'].'/ApiVentas/img/marcas/'.$items[$i]['imagen'];
         }
         return response()->json(['Marcas' => $items]);
     }
